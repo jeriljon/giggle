@@ -9,3 +9,5 @@ const logger = winston.createLogger({
         new winston.transports.Console(options.Console)
     ], exitOnError: false
 })
+
+module.exports = logger

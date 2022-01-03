@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
-
+const config = require("config")
+const logger = require("./logging/logger")
 const app = express()
 
 app.use(express.urlencoded({ extended: true }))
@@ -10,9 +11,10 @@ app.use(cors())
 const account = require('./routes/account')
 app.use('/account', account)
 
-app.listen(process.env.SERVER_PORT || 3000, (err) => {
+app.listen(config.get("Node.server.port"), (err) => {
     if (err) throw err
-    console.log(`Server is running on http://127.0.0.1:3000`)
+    console.log(`Server is running on ${config.get("Node.server.port")}`)
+    logger.info(`Server is running on port ${config.get("Node.server.port")}`)
 })
 
 module.exports = app

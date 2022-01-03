@@ -1,4 +1,5 @@
 const express = require('express')
+const logger = require("../logging/logger")
 
 module.exports = {
     getAccount: (req, res) => {
@@ -8,6 +9,7 @@ module.exports = {
             "Role": "Architect"
         }
 
+        logger.info(`Account:  ${ account }`)
         return res.status(200).json({ account: account })
     }
 }
