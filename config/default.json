@@ -1,0 +1,13 @@
+{
+  "Node": {
+    "server": {
+      "port": 3000
+    }
+  },
+  "AWS": {
+    "region": "us-east-1"
+  },
+  "Axios": {
+    "timeout": 10000
+  }
+}
