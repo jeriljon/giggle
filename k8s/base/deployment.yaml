@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: giggle-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: giggle-api
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 50%
+  template:
+    metadata:
+      labels:
+        app: giggle-api
+    spec:
+      imagePullSecrets:
+        - name: gitlab-registry
+      serviceAccountName: <create service account in AWS>
+      containers:
+        - name: giggle-api
+          image: <registry.github>
+          ports:
+            - name: check-port
+              containerPort: 3000
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "500Mi"
+              cpu: "750m"
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: api-configuration-volume
+              mountPath: /usr/src/app/config
+          command: ["yarn"]
+          args: ["start-api"]
+      volumes:
+        - name: api-configuration-volume
+          configMap:
+            name: api-config

@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: Ingress
+metadata:
+  name: giggle-api
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  rules:
+    - host: <server host url>
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: giggle-api-svc
+                port:
+                  number: 3000
